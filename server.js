@@ -18,20 +18,13 @@ let sensorData = {
 };
 
 let historyData = [];
-const csvFile =
-    "../history.csv";
-    if(
-    !fs.existsSync(
-        csvFile
-    )
-){
+const csvFile = "./history.csv";
+
+if (!fs.existsSync(csvFile)) {
 
     fs.writeFileSync(
-
         csvFile,
-
         "time,status,waterLevel,waterSpeed\n"
-
     );
 
 }
