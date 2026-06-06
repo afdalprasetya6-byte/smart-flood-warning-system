@@ -1,0 +1,132 @@
+body{
+    font-family: Arial;
+    background:#f0f2f5;
+    text-align:center;
+}
+
+.card{
+    background:white;
+    width:300px;
+    margin:20px auto;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+.aman{
+    color:green;
+    font-weight:bold;
+}
+
+.waspada{
+    color:orange;
+    font-weight:bold;
+}
+
+.bahaya{
+    color:red;
+    font-weight:bold;
+}
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:10px;
+
+}
+
+th,td{
+
+    border:1px solid #ccc;
+
+    padding:8px;
+
+    text-align:center;
+
+}
+
+th{
+
+    background:#f0f0f0;
+
+}
+.aman{
+
+    color: green;
+
+    font-weight: bold;
+
+}
+
+.siaga{
+
+    color: orange;
+
+    font-weight: bold;
+
+}
+
+.bahaya{
+
+    color: red;
+
+    font-weight: bold;
+
+}
+#alertBox{
+
+    display:none;
+
+    position:fixed;
+
+    top:20px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    background:red;
+
+    color:white;
+
+    padding:20px;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    border-radius:10px;
+
+    z-index:9999;
+
+}
+@keyframes blinkBackground{
+
+    0%{
+
+        background:white;
+
+    }
+
+    50%{
+
+        background:#ffcccc;
+
+    }
+
+    100%{
+
+        background:white;
+
+    }
+
+}
+.dangerBackground{
+
+    animation:
+        blinkBackground
+        1s
+        infinite;
+
+}

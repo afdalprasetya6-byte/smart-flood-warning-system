@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Flood Monitoring</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <div id="alertBox">
+
+        ⚠ PERINGATAN BANJIR ⚠
+
+    </div>
+    <h1>Smart Flood Warning System</h1>
+
+    <div class="card">
+
+        <h2>Status</h2>
+
+        <p id="status">
+            AMAN
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Tinggi Air</h2>
+
+        <p id="level">
+            15 cm
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Kecepatan Air</h2>
+
+        <p id="speed">
+            0.2 cm/s
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Update Terakhir</h2>
+
+        <p id="time">
+            --:--:--
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Grafik Tinggi Air</h2>
+
+        <canvas id="waterChart"></canvas>
+
+    </div>
+<div class="card">
+
+    <h2>Riwayat Data</h2>
+
+    <table id="historyTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Waktu</th>
+
+                <th>Status</th>
+
+                <th>Tinggi Air</th>
+
+                <th>Kecepatan</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="card">
+
+    <h2>Statistik</h2>
+
+    <p>
+        Tertinggi:
+        <span id="maxLevel">
+            0
+        </span>
+        cm
+    </p>
+
+    <p>
+        Terendah:
+        <span id="minLevel">
+            0
+        </span>
+        cm
+    </p>
+
+</div>
+
+<audio
+    id="alarmSound"
+    loop
+>
+
+<source
+src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
+type="audio/ogg">
+
+</audio>
+
+<div class="card">
+
+    <h2>Export Data</h2>
+
+    <a
+    href="http://localhost:3000/download">
+
+        Download CSV
+
+    </a>
+
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
