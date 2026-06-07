@@ -72,7 +72,13 @@ app.post('/update', (req, res) => {
 
         time:
             new Date()
-                .toLocaleTimeString(),
+.toLocaleTimeString(
+    'id-ID',
+    {
+        timeZone:
+            'Asia/Jakarta'
+    }
+),
 
         status:
             sensorData.status,
@@ -86,9 +92,14 @@ app.post('/update', (req, res) => {
     });
     const csvRow =
 
-    `${new Date()
-        .toLocaleTimeString()},` +
-
+`${new Date()
+    .toLocaleTimeString(
+        'id-ID',
+        {
+            timeZone:
+                'Asia/Jakarta'
+        }
+    )},` +
     `${sensorData.status},` +
 
     `${sensorData.waterLevel},` +
