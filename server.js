@@ -60,7 +60,10 @@ app.post('/update', (req, res) => {
 
     console.log(req.body);
     sensorData = req.body;
-
+    io.emit(
+    'sensorUpdate',
+    sensorData
+);
     historyData.push({
 
         time:
@@ -122,10 +125,38 @@ app.get(
 
 });
 
+const http =
+    require('http');
+
+const server =
+    http.createServer(app);
+
+const io =
+    require('socket.io')(server, {
+
+        cors: {
+
+            origin: "*"
+
+        }
+
+    });
+
+io.on(
+    'connection',
+    (socket) => {
+
+        console.log(
+            'DASHBOARD TERHUBUNG SOCKET.IO'
+        );
+
+    }
+);
+
 const PORT =
     process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 
     console.log(
         `SERVER BERJALAN DI PORT ${PORT}`
