@@ -56,7 +56,9 @@ app.get('/history', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
+    console.log("UPDATE DITERIMA");
 
+    console.log(req.body);
     sensorData = req.body;
 
     historyData.push({
