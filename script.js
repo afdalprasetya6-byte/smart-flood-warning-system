@@ -1,3 +1,15 @@
+const socket = io();
+
+socket.on(
+    'connect',
+    () => {
+
+        console.log(
+            'Socket.IO Terhubung'
+        );
+
+    }
+);
 const ctx =
     document.getElementById("waterChart");
 
