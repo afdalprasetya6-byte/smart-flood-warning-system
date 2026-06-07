@@ -10,6 +10,22 @@ socket.on(
 
     }
 );
+socket.on(
+    'sensorUpdate',
+    (data) => {
+
+        console.log(
+            'Data Real-Time:',
+            data
+        );
+
+        updateDashboard(
+            data
+        );
+
+    }
+);
+
 const ctx =
     document.getElementById("waterChart");
 
@@ -59,6 +75,58 @@ const chart =
         }
 
     });
+
+function updateDashboard(data) {
+
+    const statusElement =
+        document.getElementById("status");
+
+    statusElement.innerText =
+        data.status;
+
+    statusElement.className = "";
+
+    if (data.status === "AMAN") {
+
+        statusElement.classList.add(
+            "aman"
+        );
+
+    }
+    else if (
+        data.status === "SIAGA"
+    ) {
+
+        statusElement.classList.add(
+            "siaga"
+        );
+
+    }
+    else {
+
+        statusElement.classList.add(
+            "bahaya"
+        );
+
+    }
+
+    document.getElementById(
+        "level"
+    ).innerText =
+        data.waterLevel + " cm";
+
+    document.getElementById(
+        "speed"
+    ).innerText =
+        data.waterSpeed + " cm/s";
+
+    document.getElementById(
+        "time"
+    ).innerText =
+        new Date()
+            .toLocaleTimeString();
+
+}
 
 async function ambilData() {
 
