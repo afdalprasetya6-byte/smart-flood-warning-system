@@ -52,7 +52,7 @@ async function ambilData() {
 
     const response =
         await fetch(
-            "http://localhost:3000/data"
+            "/data"
         );
 
     const data =
@@ -191,7 +191,7 @@ async function ambilHistory() {
 
     const response =
         await fetch(
-            "http://localhost:3000/history"
+            "/history"
         );
 
     const history =
