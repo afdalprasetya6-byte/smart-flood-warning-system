@@ -1,3 +1,4 @@
+console.log("SCRIPT BARU BERHASIL DIMUAT");
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
