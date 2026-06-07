@@ -60,6 +60,10 @@ app.post('/update', (req, res) => {
 
     console.log(req.body);
     sensorData = req.body;
+    console.log(
+    "KIRIM SOCKET:",
+    sensorData
+);
     io.emit(
     'sensorUpdate',
     sensorData
