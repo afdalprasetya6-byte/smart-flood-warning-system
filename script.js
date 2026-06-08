@@ -53,7 +53,9 @@ const chart =
         },
 
         options: {
+            responsive: true,
 
+maintainAspectRatio: false,
             responsive: true,
 
             animation: false,
@@ -283,7 +285,22 @@ if(history.length > 0){
             item =>
             item.waterLevel
         );
+const avg =
 
+levels.reduce(
+    (a,b)=>a+b,
+    0
+)
+
+/
+
+levels.length;
+document
+.getElementById(
+    "avgLevel"
+)
+.innerText =
+avg.toFixed(1);
     document
         .getElementById(
             "maxLevel"
