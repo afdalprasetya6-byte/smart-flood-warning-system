@@ -1,165 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flood Monitoring</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- Font: data mono untuk angka, Manrope untuk teks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 
 <body>
+    <div id="alertBox">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>PERINGATAN BANJIR</span>
+    </div>
+
     <div class="container">
-        <div id="alertBox">
 
-            ⚠ PERINGATAN BANJIR ⚠
-
-        </div>
         <div class="header">
-
-            <h1>
-                Smart Flood Warning System
-            </h1>
-
-            <p>
-                Real-Time Monitoring Dashboard
-            </p>
-
+            <p class="eyebrow"><span class="dot"></span>Pemantauan Real-Time</p>
+            <h1>Smart Flood Warning System</h1>
+            <p class="subtitle">Dashboard pemantauan tinggi &amp; kecepatan air sungai secara langsung</p>
         </div>
 
         <div class="top-cards">
-            <div class="card">
-
-                <h2>Status</h2>
-
-                <p id="status">
-                    AMAN
-                </p>
-
+            <div class="card metric-card metric-status">
+                <div class="metric-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="metric-body">
+                    <span class="metric-label">Status Siaga</span>
+                    <p id="status" class="metric-value">AMAN</p>
+                </div>
             </div>
 
-            <div class="card">
-
-                <h2>Tinggi Air</h2>
-
-                <p id="level">
-                    15 cm
-                </p>
-
+            <div class="card metric-card metric-level">
+                <div class="metric-icon">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+                <div class="metric-body">
+                    <span class="metric-label">Tinggi Air</span>
+                    <p id="level" class="metric-value">15 cm</p>
+                </div>
             </div>
 
-            <div class="card">
-
-                <h2>Kecepatan Air</h2>
-
-                <p id="speed">
-                    0.2 cm/s
-                </p>
-
+            <div class="card metric-card metric-speed">
+                <div class="metric-icon">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <div class="metric-body">
+                    <span class="metric-label">Kecepatan Air</span>
+                    <p id="speed" class="metric-value">0.2 cm/s</p>
+                </div>
             </div>
 
-            <div class="card">
-
-                <h2>Update Terakhir</h2>
-
-                <p id="time">
-                    --:--:--
-                </p>
-
+            <div class="card metric-card metric-time">
+                <div class="metric-icon">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div class="metric-body">
+                    <span class="metric-label">Update Terakhir</span>
+                    <p id="time" class="metric-value">--:--:--</p>
+                </div>
             </div>
         </div>
-       <div class="card chart-card">
 
-    <h2>Grafik Tinggi Air</h2>
+        <div class="card chart-card">
+            <h2><i class="fa-solid fa-chart-line"></i>Grafik Tinggi Air</h2>
 
-    <div class="chart-container">
-
-        <canvas id="waterChart"></canvas>
-
-    </div>
-
-</div>
+            <div class="chart-container">
+                <canvas id="waterChart"></canvas>
+            </div>
+        </div>
 
         <div class="bottom-section">
             <div class="card stats-card">
-
-                <h2>Statistik</h2>
+                <h2><i class="fa-solid fa-chart-simple"></i>Statistik</h2>
 
                 <p>
-                    Tertinggi:
-                    <span id="maxLevel">
-                        0
-                    </span>
-                    cm
+                    Tertinggi
+                    <span><span id="maxLevel">0</span> cm</span>
                 </p>
 
                 <p>
-                    Terendah:
-                    <span id="minLevel">
-                        0
-                    </span>
-                    cm
+                    Terendah
+                    <span><span id="minLevel">0</span> cm</span>
                 </p>
 
                 <p>
-                    Rata-rata:
-                    <span id="avgLevel">
-                        0
-                    </span>
-                    cm
+                    Rata-rata
+                    <span><span id="avgLevel">0</span> cm</span>
                 </p>
-
             </div>
+
             <div class="card history-card">
+                <h2><i class="fa-solid fa-clock-rotate-left"></i>Riwayat Data</h2>
 
-                <h2>Riwayat Data</h2>
-
-                <table id="historyTable">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Waktu</th>
-
-                            <th>Status</th>
-
-                            <th>Tinggi Air</th>
-
-                            <th>Kecepatan</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                    </tbody>
-
-                </table>
-
+                <div class="table-scroll">
+                    <table id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Waktu</th>
+                                <th>Status</th>
+                                <th>Tinggi Air</th>
+                                <th>Kecepatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-
         </div>
 
         <audio id="alarmSound" loop>
-
             <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
-
         </audio>
 
-        <div class="card">
-
-            <h2>Export Data</h2>
-
+        <div class="card export-card">
+            <div class="export-text">
+                <h2><i class="fa-solid fa-file-csv"></i>Export Data</h2>
+                <p>Unduh seluruh riwayat data sensor dalam format CSV.</p>
+            </div>
             <a href="/download">
+                <i class="fa-solid fa-download"></i>
                 Download CSV
             </a>
-
         </div>
 
         <script src="script.js"></script>

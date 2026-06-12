@@ -1,320 +1,560 @@
+/* ============================================================
+   SMART FLOOD WARNING SYSTEM — DASHBOARD STYLES
+   Tema: "Monitoring Console" — panel kontrol gelap dengan
+   aksen cyan (air) dan status AMAN/SIAGA/BAHAYA yang jelas.
+   ============================================================ */
+
+:root {
+    /* Palet warna */
+    --bg: #0b1420;
+    --panel: #121f33;
+    --panel-alt: #16263f;
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e7eef8;
+    --text-dim: #8da0bc;
+    --cyan: #38bdf8;
+    --cyan-dim: rgba(56, 189, 248, 0.18);
+
+    --aman: #34d399;
+    --aman-bg: rgba(52, 211, 153, 0.14);
+    --siaga: #fbbf24;
+    --siaga-bg: rgba(251, 191, 36, 0.14);
+    --bahaya: #f87171;
+    --bahaya-bg: rgba(248, 113, 113, 0.16);
+
+    /* Tipografi */
+    --font-ui: "Manrope", "Segoe UI", sans-serif;
+    --font-data: "JetBrains Mono", "Courier New", monospace;
+
+    --radius: 14px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial;
-    background: #f0f2f5;
+    font-family: var(--font-ui);
+    background: var(--bg);
+    background-image:
+        radial-gradient(circle at 15% 0%, rgba(56, 189, 248, 0.07), transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(52, 211, 153, 0.05), transparent 45%);
+    color: var(--text);
     text-align: center;
-}
-
-.card {
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 10px;
-
-    box-shadow:
-        0 0 10px rgba(0,
-            0,
-            0,
-            0.1);
-
-}
-
-.card {
-
-    margin-bottom: 20px;
-
-}
-
-.aman {
-    color: green;
-    font-weight: bold;
-}
-
-.waspada {
-    color: orange;
-    font-weight: bold;
-}
-
-.bahaya {
-    color: red;
-    font-weight: bold;
-}
-
-table {
-
-    width: 100%;
-
-    border-collapse: collapse;
-
-    margin-top: 10px;
-
-}
-
-th,
-td {
-
-    border: 1px solid #ccc;
-
-    padding: 8px;
-
-    text-align: center;
-
-}
-
-th {
-
-    background: #f0f0f0;
-
-}
-
-.aman {
-
-    color: green;
-
-    font-weight: bold;
-
-}
-
-.siaga {
-
-    color: orange;
-
-    font-weight: bold;
-
-}
-
-.bahaya {
-
-    color: red;
-
-    font-weight: bold;
-
-}
-
-#alertBox {
-
-    display: none;
-
-    position: fixed;
-
-    top: 20px;
-
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    background: red;
-
-    color: white;
-
-    padding: 20px;
-
-    font-size: 24px;
-
-    font-weight: bold;
-
-    border-radius: 10px;
-
-    z-index: 9999;
-
-}
-
-@keyframes blinkBackground {
-
-    0% {
-
-        background: white;
-
-    }
-
-    50% {
-
-        background: #ffcccc;
-
-    }
-
-    100% {
-
-        background: white;
-
-    }
-
-}
-
-.dangerBackground {
-
-    animation:
-        blinkBackground 1s infinite;
-
+    margin: 0;
+    min-height: 100vh;
 }
 
 .container {
-
     max-width: 1400px;
-
     margin: auto;
-
-    padding: 20px;
-
+    padding: 24px 20px 48px;
 }
 
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.header {
+    text-align: left;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-data);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin: 0 0 10px;
+}
+
+.header .eyebrow .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--aman);
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+    0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55); }
+    70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+}
+
+.header p.subtitle {
+    color: var(--text-dim);
+    margin: 0;
+    font-size: 15px;
+}
+
+/* ============================================================
+   CARD DASAR
+   ============================================================ */
+
+.card {
+    background: linear-gradient(180deg, var(--panel-alt), var(--panel));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.card h2 {
+    margin: 0 0 14px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2 i {
+    color: var(--cyan);
+    font-size: 15px;
+}
+
+/* ============================================================
+   TOP CARDS — KARTU METRIK / "INSTRUMEN"
+   ============================================================ */
+
 .top-cards {
-
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
 
-    grid-template-columns:
-        repeat(4,
-            1fr);
+.metric-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    margin-bottom: 0;
+    border-left: 3px solid var(--cyan);
+    position: relative;
+    overflow: hidden;
+}
 
-    gap: 20px;
+.metric-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+}
 
+.metric-icon {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cyan-dim);
+    color: var(--cyan);
+    font-size: 20px;
+}
+
+.metric-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.metric-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
+.metric-value {
+    font-family: var(--font-data);
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+    color: var(--text);
+}
+
+/* Kartu Tinggi Air & Kecepatan Air diberi aksen biru muda */
+.metric-level .metric-icon,
+.metric-speed .metric-icon {
+    background: rgba(56, 189, 248, 0.14);
+    color: var(--cyan);
+}
+
+.metric-time .metric-icon {
+    background: rgba(141, 160, 188, 0.14);
+    color: var(--text-dim);
+}
+
+.metric-time .metric-value {
+    font-size: 22px;
+    color: var(--text-dim);
+}
+
+/* ----- Status badge (#status) — kelas diisi otomatis oleh script.js ----- */
+
+#status {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+}
+
+.metric-status .metric-icon {
+    background: var(--aman-bg);
+    color: var(--aman);
+}
+
+.aman {
+    color: var(--aman);
+    font-weight: bold;
+    background: var(--aman-bg);
+}
+
+.siaga {
+    color: var(--siaga);
+    font-weight: bold;
+    background: var(--siaga-bg);
+}
+
+.waspada {
+    color: var(--siaga);
+    font-weight: bold;
+    background: var(--siaga-bg);
+}
+
+.bahaya {
+    color: var(--bahaya);
+    font-weight: bold;
+    background: var(--bahaya-bg);
+}
+
+/* Saat status BAHAYA / SIAGA, beri sorotan pada ikon kartu status */
+.metric-status:has(#status.bahaya) .metric-icon {
+    background: var(--bahaya-bg);
+    color: var(--bahaya);
+}
+
+.metric-status:has(#status.bahaya) {
+    border-left-color: var(--bahaya);
+}
+
+.metric-status:has(#status.siaga) .metric-icon,
+.metric-status:has(#status.waspada) .metric-icon {
+    background: var(--siaga-bg);
+    color: var(--siaga);
+}
+
+.metric-status:has(#status.siaga),
+.metric-status:has(#status.waspada) {
+    border-left-color: var(--siaga);
+}
+
+/* ============================================================
+   ALERT BOX
+   ============================================================ */
+
+#alertBox {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    color: #fff;
+    padding: 16px 32px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    border-radius: 12px;
+    z-index: 9999;
+    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.55);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: alertPop 1s ease infinite alternate;
+}
+
+#alertBox i {
+    font-size: 22px;
+    animation: alertShake 0.6s ease infinite;
+}
+
+@keyframes alertPop {
+    from { box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4); }
+    to { box-shadow: 0 10px 40px rgba(239, 68, 68, 0.85); }
+}
+
+@keyframes alertShake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-12deg); }
+    75% { transform: rotate(12deg); }
+}
+
+@keyframes blinkBackground {
+    0% { background: var(--bg); }
+    50% { background: #2a0f12; }
+    100% { background: var(--bg); }
+}
+
+.dangerBackground {
+    animation: blinkBackground 1s infinite;
+}
+
+/* ============================================================
+   GRAFIK
+   ============================================================ */
+
+.chart-card {
+    width: 100%;
+}
+
+.chart-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
 canvas {
-
     width: 100% !important;
-
-    height: 400px !important;
-
+    height: 100% !important;
 }
+
+/* ============================================================
+   BOTTOM SECTION — STATISTIK & RIWAYAT
+   ============================================================ */
 
 .bottom-section {
-
     display: flex;
-
-    grid-template-columns:
-
-        1fr 2fr;
-
     gap: 20px;
-align-items:flex-start;
+    align-items: flex-start;
     margin-top: 20px;
-
 }
 
-h1 {
-
-    font-size: 36px;
-
-    margin-bottom: 30px;
-
+.stats-card {
+    width: 270px;
+    flex: 0 0 270px;
+    text-align: left;
 }
 
-@media (max-width:768px) {
+.stats-card p {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    margin: 0;
+    border-bottom: 1px dashed var(--border);
+    color: var(--text-dim);
+    font-size: 14px;
+}
 
+.stats-card p:last-child {
+    border-bottom: none;
+}
+
+.stats-card p span {
+    font-family: var(--font-data);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cyan);
+}
+
+.history-card {
+    flex: 1;
+    text-align: left;
+    min-width: 0;
+}
+
+/* ============================================================
+   TABEL RIWAYAT
+   ============================================================ */
+
+.table-scroll {
+    max-height: 360px;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-family: var(--font-data);
+    font-size: 13px;
+}
+
+th, td {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 8px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+th {
+    background: var(--panel-alt);
+    color: var(--text-dim);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+tbody tr:hover {
+    background: var(--cyan-dim);
+}
+
+td:last-child, th:last-child {
+    border-right: none;
+}
+
+/* Status pada tabel memakai kelas yang sama (aman/siaga/bahaya) */
+table .aman, table .siaga, table .bahaya {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+/* Scrollbar khusus area tabel */
+.table-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+/* ============================================================
+   EXPORT CARD
+   ============================================================ */
+
+.export-card {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.export-card .export-text h2 {
+    margin-bottom: 4px;
+}
+
+.export-card .export-text p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: linear-gradient(135deg, var(--cyan), #0ea5e9);
+    color: #06222f;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.25);
+}
+
+a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(56, 189, 248, 0.35);
+    opacity: 1;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 992px) {
     .top-cards {
-
-        grid-template-columns:
-            1fr;
-
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .bottom-section {
-
-        grid-template-columns:
-            1fr;
-
+        flex-direction: column;
     }
 
+    .stats-card {
+        width: 100%;
+        flex: 1 1 auto;
+    }
 }
 
-#status {
+@media (max-width: 600px) {
+    .top-cards {
+        grid-template-columns: 1fr;
+    }
 
-    font-size: 32px;
+    .header {
+        text-align: center;
+    }
 
-    font-weight: bold;
+    .header .eyebrow {
+        justify-content: center;
+    }
 
-    margin: 10px 0;
+    .export-card {
+        flex-direction: column;
+        text-align: center;
+    }
 
-}
-
-#level {
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-}
-
-#speed {
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-}
-
-#time {
-
-    font-size: 20px;
-
-}
-.header{
-
-    margin-bottom:20px;
-
-}
-.header h1{
-
-    margin-bottom:5px;
-
-}
-.header p{
-
-    color:#666;
-
-}
-canvas{
-
-    width:100% !important;
-
-    height:100% !important;
-
-}
-a{
-
-    display:inline-block;
-
-    padding:12px 20px;
-
-    background:#1976d2;
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:8px;
-
-    font-weight:bold;
-
-}
-a:hover{
-
-    opacity:0.9;
-
-}
-.chart-card{
-
-    width:100%;
-
-}
-.chart-container{
-
-    position:relative;
-
-    height:350px;
-
-    width:100%;
-
-}
-.stats-card{
-
-    width:250px;
-
-}
-.history-card{
-
-    flex:1;
-
+    .export-card .export-text {
+        text-align: center;
+    }
 }
