@@ -106,13 +106,49 @@ app.post('/update', (req, res) => {
 
     `${sensorData.waterSpeed}\n`;
 
-fs.appendFileSync(
+try {
 
-    csvFile,
+    fs.appendFileSync(
+        csvFile,
+        csvRow
+    );
 
-    csvRow
+}
+catch(err){
 
-);
+    console.error(
+        "Gagal simpan CSV:",
+        err
+    );
+
+}
+
+try {
+
+    const stats =
+        fs.statSync(csvFile);
+
+    if(stats.size > 5 * 1024 * 1024){
+
+        fs.writeFileSync(
+            csvFile,
+            "time,status,waterLevel,waterSpeed\n"
+        );
+
+        console.log(
+            "CSV direset karena > 5MB"
+        );
+    }
+
+}
+catch(err){
+
+    console.error(
+        "Gagal cek ukuran CSV:",
+        err
+    );
+
+}
     if (historyData.length > 100) {
 
         historyData.shift();
@@ -167,7 +203,26 @@ io.on(
 
     }
 );
+app.get(
+    '/health',
+    (req,res)=>{
 
+    res.json({
+
+        status:"OK",
+
+        uptime:
+            process.uptime(),
+
+        memory:
+            process.memoryUsage(),
+
+        timestamp:
+            new Date()
+
+    });
+
+});
 const PORT =
     process.env.PORT || 3000;
 
