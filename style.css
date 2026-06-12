@@ -280,22 +280,29 @@ body {
 
 #alertBox {
     display: none;
+
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
+
     background: linear-gradient(135deg, #ef4444, #b91c1c);
     color: #fff;
+
     padding: 16px 32px;
     font-size: 20px;
     font-weight: 800;
     letter-spacing: 0.04em;
+
     border-radius: 12px;
+
     z-index: 9999;
+
     box-shadow: 0 8px 30px rgba(239, 68, 68, 0.55);
-    display: flex;
+
     align-items: center;
     gap: 12px;
+
     animation: alertPop 1s ease infinite alternate;
 }
 
