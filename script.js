@@ -127,7 +127,36 @@ function updateDashboard(data) {
     ).innerText =
         new Date()
             .toLocaleTimeString();
+const indikator =
+document.getElementById(
+    "deviceStatus"
+);
 
+const selisih =
+Date.now()
+-
+data.lastUpdate;
+
+if(
+    selisih < 10000
+){
+
+    indikator.innerText =
+        "● ONLINE";
+
+    indikator.className =
+        "online";
+
+}
+else{
+
+    indikator.innerText =
+        "● OFFLINE";
+
+    indikator.className =
+        "offline";
+
+}
 }
 
 async function ambilData() {
@@ -278,6 +307,24 @@ async function ambilHistory() {
 
     const history =
         await response.json();
+    chart.data.labels = [];
+chart.data.datasets[0].data = [];
+history
+.slice(-20)
+.forEach(item => {
+
+    chart.data.labels.push(
+        item.time
+    );
+
+    chart.data.datasets[0]
+    .data
+    .push(
+        item.waterLevel
+    );
+
+});
+chart.update();
 if(history.length > 0){
 
     const levels =

@@ -565,3 +565,23 @@ a:hover {
         text-align: center;
     }
 }
+#deviceStatus{
+
+    margin-top:10px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+.online{
+
+    color:#34d399;
+
+}
+
+.offline{
+
+    color:#f87171;
+
+}

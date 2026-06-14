@@ -59,26 +59,35 @@ app.post('/update', (req, res) => {
     console.log("UPDATE DITERIMA");
 
     console.log(req.body);
-    sensorData = req.body;
+    sensorData = {
+
+    ...req.body,
+
+    lastUpdate:
+        Date.now()
+
+};
     console.log(
-    "KIRIM SOCKET:",
-    sensorData
-);
+        "KIRIM SOCKET:",
+        sensorData
+    );
     io.emit(
-    'sensorUpdate',
-    sensorData
-);
+        'sensorUpdate',
+        sensorData
+    );
+    const currentTime =
+    new Date()
+    .toLocaleString(
+        'id-ID',
+        {
+            timeZone:
+                'Asia/Jakarta'
+        }
+    );
     historyData.push({
 
         time:
-            new Date()
-.toLocaleTimeString(
-    'id-ID',
-    {
-        timeZone:
-            'Asia/Jakarta'
-    }
-),
+    currentTime,
 
         status:
             sensorData.status,
@@ -92,63 +101,56 @@ app.post('/update', (req, res) => {
     });
     const csvRow =
 
-`${new Date()
-    .toLocaleTimeString(
-        'id-ID',
-        {
-            timeZone:
-                'Asia/Jakarta'
-        }
-    )},` +
-    `${sensorData.status},` +
+        `${currentTime},`+
+        `${sensorData.status},` +
 
-    `${sensorData.waterLevel},` +
+        `${sensorData.waterLevel},` +
 
-    `${sensorData.waterSpeed}\n`;
+        `${sensorData.waterSpeed}\n`;
 
-try {
+    try {
 
-    fs.appendFileSync(
-        csvFile,
-        csvRow
-    );
-
-}
-catch(err){
-
-    console.error(
-        "Gagal simpan CSV:",
-        err
-    );
-
-}
-
-try {
-
-    const stats =
-        fs.statSync(csvFile);
-
-    if(stats.size > 5 * 1024 * 1024){
-
-        fs.writeFileSync(
+        fs.appendFileSync(
             csvFile,
-            "time,status,waterLevel,waterSpeed\n"
+            csvRow
         );
 
-        console.log(
-            "CSV direset karena > 5MB"
+    }
+    catch (err) {
+
+        console.error(
+            "Gagal simpan CSV:",
+            err
         );
+
     }
 
-}
-catch(err){
+    try {
 
-    console.error(
-        "Gagal cek ukuran CSV:",
-        err
-    );
+        const stats =
+            fs.statSync(csvFile);
 
-}
+        if (stats.size > 5 * 1024 * 1024) {
+
+            fs.writeFileSync(
+                csvFile,
+                "time,status,waterLevel,waterSpeed\n"
+            );
+
+            console.log(
+                "CSV direset karena > 5MB"
+            );
+        }
+
+    }
+    catch (err) {
+
+        console.error(
+            "Gagal cek ukuran CSV:",
+            err
+        );
+
+    }
     if (historyData.length > 100) {
 
         historyData.shift();
@@ -168,13 +170,13 @@ catch(err){
 
 app.get(
     '/download',
-    (req,res)=>{
+    (req, res) => {
 
-    res.download(
-        csvFile
-    );
+        res.download(
+            csvFile
+        );
 
-});
+    });
 
 const http =
     require('http');
@@ -205,24 +207,24 @@ io.on(
 );
 app.get(
     '/health',
-    (req,res)=>{
+    (req, res) => {
 
-    res.json({
+        res.json({
 
-        status:"OK",
+            status: "OK",
 
-        uptime:
-            process.uptime(),
+            uptime:
+                process.uptime(),
 
-        memory:
-            process.memoryUsage(),
+            memory:
+                process.memoryUsage(),
 
-        timestamp:
-            new Date()
+            timestamp:
+                new Date()
+
+        });
 
     });
-
-});
 const PORT =
     process.env.PORT || 3000;
 
