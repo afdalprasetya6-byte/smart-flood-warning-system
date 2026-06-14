@@ -68,7 +68,7 @@ maintainAspectRatio: false,
 
                     min: 0,
 
-                    max: 35
+                    max: 10
 
                 }
 
